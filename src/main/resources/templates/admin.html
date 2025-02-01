@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+</head>
+<body>
+<h2>All Users</h2>
+<form th:action="@{/admin/new}" method="get">
+    <button type="submit">Create</button>
+</form>
+<br>
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:each="role:${user.getRoles()}" th:text="${role.getName().replace('ROLE_', '')}"></td>
+        <td>
+            <form method="get" th:action="@{/admin/update/{id}(id=${user.getId()})}">
+                <input type="submit" value="Update"/>
+            </form>
+            <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.id})}">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<br/>
+<form th:action="@{/logout}" method="get">
+    <button type="submit">Logout</button>
+</form>
+</body>
+</html>
