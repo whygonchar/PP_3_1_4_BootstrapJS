@@ -29,7 +29,9 @@ public class DBInit {
         roleService.addRole(admin);
         roleService.addRole(user);
 
-        userService.saveUser(new User("Daniil", "daniil@admin.com", "admin", Set.of(admin)));
-        userService.saveUser(new User("user", "user@user.com", "user", Set.of(user)));
+        userService.saveUser(new User(Set.of(admin),"daniil@gmail.com","admin",
+                25, "Goncharov", "Daniil"));
+        userService.saveUser(new User(Set.of(user),"user@gmail.com","user",
+                01, "1", "user"));
     }
 }

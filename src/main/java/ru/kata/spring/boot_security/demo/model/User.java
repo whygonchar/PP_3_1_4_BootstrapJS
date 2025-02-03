@@ -20,6 +20,12 @@ public class User implements UserDetails {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "lastname")
+    private String lastname;
+
+    @Column(name = "age")
+    private int age;
+
     @Column(name = "password")
     private String password;
 
@@ -40,13 +46,14 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String email, String password, Set<Role> roles) {
-        this.username = username;
+    public User(Set<Role> roles, String email, String password, int age, String lastname, String username) {
+        this.roles = roles;
         this.email = email;
         this.password = password;
-        this.roles = roles;
+        this.age = age;
+        this.lastname = lastname;
+        this.username = username;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -113,5 +120,21 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
