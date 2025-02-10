@@ -33,7 +33,7 @@ public class User implements UserDetails {
     private String email;
 
     //Создайте класс Role и свяжите User с ролями так, чтобы юзер мог иметь несколько ролей.
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.MERGE})
     @Fetch(FetchMode.JOIN)
     @JoinTable(
             name = "user_role",

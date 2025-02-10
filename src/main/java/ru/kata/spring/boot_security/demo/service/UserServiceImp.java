@@ -30,7 +30,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Override
     @Transactional(readOnly = true)
-    public User findById(Long id) {
+    public User findUserById(Long id) {
         return userRepository.getById(id);
     }
 
