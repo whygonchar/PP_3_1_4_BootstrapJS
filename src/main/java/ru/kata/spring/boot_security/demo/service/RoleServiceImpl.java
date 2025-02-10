@@ -9,12 +9,11 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import java.util.List;
 
 @Service
-public class RoleServiceImp implements RoleService {
-
+public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
 
     @Autowired
-    public RoleServiceImp(RoleRepository roleRepository) {
+    public RoleServiceImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
 
@@ -33,7 +32,7 @@ public class RoleServiceImp implements RoleService {
     @Override
     @Transactional(readOnly = true)
     public Role findByName(String name) {
-        return roleRepository.findByName(name);
+        return roleRepository.findRoleByName(name);
     }
 
     @Override

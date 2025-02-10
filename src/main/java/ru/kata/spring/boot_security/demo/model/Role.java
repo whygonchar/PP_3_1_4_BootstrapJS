@@ -7,13 +7,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "roles")
+// Имплементируйте модели Role и User интерфейсами GrantedAuthority и UserDetails
 public class Role implements GrantedAuthority {
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "name_role")
     private String name;
 
@@ -28,8 +27,12 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    public Role(String roleAdmin) {
-        this.name = roleAdmin;
+    public Role(Long id) {
+        this.id = id;
+    }
+
+    public Role(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -46,14 +49,6 @@ public class Role implements GrantedAuthority {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 
     @Override

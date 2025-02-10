@@ -1,40 +1,40 @@
 package ru.kata.spring.boot_security.demo.model;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import java.util.Collection;
 import java.util.Set;
 
+
 @Entity
 @Table(name = "users")
+// Имплементируйте модели Role и User интерфейсами GrantedAuthority и UserDetails
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "username")
     private String username;
-
-    @Column(name = "lastname")
-    private String lastname;
-
-    @Column(name = "age")
-    private int age;
-
     @Column(name = "password")
     private String password;
-
     @Column(name = "email")
     private String email;
 
     //Создайте класс Role и свяжите User с ролями так, чтобы юзер мог иметь несколько ролей.
-    @ManyToMany(cascade = {CascadeType.MERGE})
-    @Fetch(FetchMode.JOIN)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -44,21 +44,21 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     public User() {
+
     }
 
-    public User(Set<Role> roles, String email, String password, int age, String lastname, String username) {
-        this.roles = roles;
+    public User(String username, String email, String password, Set<Role> roles) {
+        this.username = username;
         this.email = email;
         this.password = password;
-        this.age = age;
-        this.lastname = lastname;
-        this.username = username;
+        this.roles = roles;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
     }
+
 
     @Override
     public String getPassword() {
@@ -122,19 +122,5 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public String getLastname() {
-        return lastname;
-    }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
 }
